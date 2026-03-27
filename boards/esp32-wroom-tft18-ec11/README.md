@@ -218,6 +218,10 @@ Ready-to-flash `.bin` available in the
 
 ---
 
+https://github.com/user-attachments/assets/d93b7bbc-9356-4e83-baf2-26f5330090c0
+
+
+
 ## License
 
 Inherits the license from the original Bruce firmware.
