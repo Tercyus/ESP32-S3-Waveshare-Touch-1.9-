@@ -56,8 +56,10 @@ void _setBrightness(uint8_t brightval) {
 ** Handles PrevPress, NextPress, SelPress, AnyKeyPress and EscPress
 **********************************************************************/
 void InputHandler(void) {
-    static unsigned long tm  = millis(); // button debounce
-    static unsigned long tm2 = millis(); // gap between encoder and select
+    static unsigned long tm = millis();
+    static unsigned long btnDownAt = 0;
+    static bool btnWasDown = false;
+    static bool rotatedWhileHeld = false;
     static int posDifference = 0;
     static int lastPos = 0;
 
@@ -65,32 +67,55 @@ void InputHandler(void) {
     if (newPos != lastPos) {
         posDifference += (newPos - lastPos);
         lastPos = newPos;
+        if (btnWasDown) rotatedWhileHeld = true;
     }
 
-    bool sel = !BTN_ACT;
-    if (millis() - tm > 200 || LongPress) {
-        sel = digitalRead(SEL_BTN);
-    }
+    bool btnDown = (digitalRead(SEL_BTN) == BTN_ACT);
 
-    if (posDifference != 0 || sel == BTN_ACT) {
+    if (posDifference != 0 || btnDown) {
         if (!wakeUpScreen()) AnyKeyPress = true;
         else return;
     }
 
+    // While button is held >300 ms → EscPress acts as row-change modifier in the keyboard
+    if (btnDown) {
+        if (!btnWasDown) {
+            btnDownAt = millis();
+            btnWasDown = true;
+            rotatedWhileHeld = false;
+        }
+        if (millis() - btnDownAt > 300) EscPress = true;
+    } else {
+        if (btnWasDown) {
+            unsigned long held = millis() - btnDownAt;
+            btnWasDown = false;
+            bool moved = rotatedWhileHeld;
+            rotatedWhileHeld = false;
+            EscPress = false;
+
+            if (!moved) {
+                if (held > 800) {
+                    // Long press without rotation → ESC (go back / cancel)
+                    EscPress = true;
+                } else if (millis() - tm > 150) {
+                    // Short press → Select
+                    posDifference = 0;
+                    SelPress = true;
+                    tm = millis();
+                }
+            }
+            // If rotated while held: EscPress modifier already triggered row navigation
+        }
+    }
+
+    // Encoder rotation
     if (posDifference > 0) {
         PrevPress = true;
         posDifference--;
-        tm2 = millis();
     }
     if (posDifference < 0) {
         NextPress = true;
         posDifference++;
-        tm2 = millis();
-    }
-    if (sel == BTN_ACT && millis() - tm2 > 200) {
-        posDifference = 0;
-        SelPress = true;
-        tm = millis();
     }
 }
 
