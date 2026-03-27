@@ -180,7 +180,17 @@ pio run -e esp32-wroom-tft18-ec11 --target upload
 
 ---
 
-## Key technical notes
+### Keyboard navigation
+
+Uses the `HAS_ENCODER` branch of Bruce's keyboard.
+Hold the encoder button (>300 ms) while rotating to change rows.
+
+| Action | Result |
+|--------|--------|
+| Rotate | Move left / right between letters |
+| Hold + rotate | Change keyboard row |
+| Short press (<300 ms) | Select letter |
+| Long press (>800 ms) | ESC — go back / cancel |
 
 ### TFT_eSPI backend
 
