@@ -93,10 +93,33 @@ Port of [Bruce Firmware](https://github.com/BruceDevices/Bruce) for the
 
 ### Via SPI — free GPIO pins + Bruce Config Pins menu
 
-| Module | Function | Suggested pins |
-|--------|----------|----------------|
-| **CC1101** | RF 433/868/915 MHz — replay, analysis | SCK=1, MOSI=2, MISO=3, CS=5 |
-| **NRF24L01** | RF 2.4 GHz — MouseJack, jamming | SCK=1, MOSI=2, MISO=3, CS=5, CE=6 |
+CC1101 and NRF24 share the SPI bus (SCK/MOSI/MISO). Both can be connected simultaneously — Bruce activates one at a time.
+
+#### CC1101 — RF 433/868/915 MHz
+
+| Pin CC1101 | GPIO |
+|------------|------|
+| VCC        | 3.3V |
+| GND        | GND  |
+| SCK        | 1    |
+| MOSI       | 2    |
+| MISO       | 3    |
+| CSN        | 5    |
+| GDO0       | 6    |
+| GDO2       | — (not connected) |
+
+#### NRF24L01 — RF 2.4 GHz
+
+| Pin NRF24 | GPIO |
+|-----------|------|
+| VCC       | 3.3V |
+| GND       | GND  |
+| SCK       | 1 (shared) |
+| MOSI      | 2 (shared) |
+| MISO      | 3 (shared) |
+| CSN       | 7    |
+| CE        | 8    |
+| IRQ       | 15 (optional) |
 
 > Assign pins in Bruce: **Settings → Config Pins → RF Module**
 
@@ -104,8 +127,8 @@ Port of [Bruce Firmware](https://github.com/BruceDevices/Bruce) for the
 
 | Module | Function | Suggested pin |
 |--------|----------|---------------|
-| **IR LED** (+ 100Ω resistor) | IR transmit — remote replay, TV-B-Gone | GPIO 6 |
-| **IR receiver TSOP4838** | IR capture | GPIO 7 |
+| **IR LED** (+ 100Ω resistor) | IR transmit — remote replay, TV-B-Gone | GPIO 16 |
+| **IR receiver TSOP4838** | IR capture | GPIO 18 |
 
 > Assign pins in Bruce: **Settings → Config Pins → IR TX / IR RX**
 
@@ -120,17 +143,18 @@ GPIO 38, 42, 43, 44, 45, 46
 > **Avoid:** GPIO 0 (BOOT), 4 (BAT ADC), 9–14 (display),
 > 17/21 (touch), 39–41 (SD), 47/48 (I2C)
 
-### Recommended full setup
+### Recommended full setup (all modules simultaneously)
 
 ```
-Grove port      → PN532       (RFID/NFC)
-GPIO 1,2,3,5    → CC1101      (RF 433 MHz)
-GPIO 6          → IR LED      (IR transmit)
-GPIO 7          → IR receiver (IR capture)
+Grove port     → PN532   (RFID/NFC — I2C, plug & play)
+GPIO 1,2,3,5,6 → CC1101  (SCK, MOSI, MISO, CSN, GDO0)
+GPIO 1,2,3,7,8 → NRF24   (SCK, MOSI, MISO, CSN, CE)
+GPIO 15        → NRF24   IRQ (optional)
+GPIO 16        → IR LED  (IR transmit)
+GPIO 18        → IR RX   (IR capture)
 ```
 
-With this setup: WiFi + BT + RFID + RF 433 MHz + IR + Touch + SD —
-everything Bruce can do.
+With this setup: **WiFi + BT + RFID + RF 433 MHz + RF 2.4 GHz + IR TX + IR RX + Touch + SD** — everything Bruce can do at once.
 
 ---
 
@@ -191,27 +215,4 @@ The ST7789V2 on this board works correctly in **INVOFF** state
 (`TFT_INVERTION=0`). `colorInverted` is forced to `false` in
 `_post_setup_gpio()` to override any stored config value.
 
----
-
-## Precompiled binary
-
-Ready-to-flash `.bin` available in the
-[Releases](https://github.com/Tercyus/Bruce/releases) section.
-
----
-
-## Credits
-
-| | |
-|---|---|
-| Original firmware | [BruceDevices/Bruce](https://github.com/BruceDevices/Bruce) |
-| Waveshare port | [@Tercyus](https://github.com/Tercyus) |
-| LovyanGFX | [lovyan03/LovyanGFX](https://github.com/lovyan03/LovyanGFX) |
-| TouchLib | [mmMicky/TouchLib](https://github.com/mmMicky/TouchLib) |
-
----
-
-## License
-
-Inherits the license from the original Bruce firmware.
-See [LICENSE](../../LICENSE) in the root of the repository.
+### Simu
