@@ -9,17 +9,16 @@
 
 // =========================
 // External SPI Bus (CC1101, NRF24, etc.)
-// Configurable via Bruce menu - set to -1 to let user choose
 // =========================
-#define SPI_MOSI_PIN -1
-#define SPI_MISO_PIN -1
-#define SPI_SCK_PIN  -1
+#define SPI_SCK_PIN  1
+#define SPI_MOSI_PIN 2
+#define SPI_MISO_PIN 3
 #define SPI_SS_PIN   -1
 
-static const uint8_t SS   = 10;
-static const uint8_t MOSI = 13;
-static const uint8_t MISO = 255; // not connected
-static const uint8_t SCK  = 10;
+static const uint8_t SS   = 5;
+static const uint8_t MOSI = 2;
+static const uint8_t MISO = 3;
+static const uint8_t SCK  = 1;
 
 // =========================
 // I2C (Touch CST816 + IMU QMI8658 share this bus)
@@ -31,12 +30,30 @@ static const uint8_t SDA = GROVE_SDA;
 static const uint8_t SCL = GROVE_SCL;
 
 // =========================
-// Serial / GPS
+// Serial / GPS (free pins — NOT the I2C/touch pins)
 // =========================
-#define SERIAL_TX GROVE_SDA
-#define SERIAL_RX GROVE_SCL
+#define SERIAL_TX     19
+#define SERIAL_RX     20
 #define GPS_SERIAL_TX SERIAL_TX
 #define GPS_SERIAL_RX SERIAL_RX
+
+// =========================
+// CC1101 RF module
+// =========================
+#define CC1101_GDO0_PIN  6
+#define CC1101_SS_PIN    5
+#define CC1101_MOSI_PIN  SPI_MOSI_PIN
+#define CC1101_SCK_PIN   SPI_SCK_PIN
+#define CC1101_MISO_PIN  SPI_MISO_PIN
+
+// =========================
+// NRF24L01 RF module
+// =========================
+#define NRF24_CE_PIN    8
+#define NRF24_SS_PIN    7
+#define NRF24_MOSI_PIN  SPI_MOSI_PIN
+#define NRF24_SCK_PIN   SPI_SCK_PIN
+#define NRF24_MISO_PIN  SPI_MISO_PIN
 
 // =========================
 // Display ST7789V2 (SPI) — pins shared by TFT_eSPI and LovyanGFX
@@ -99,8 +116,10 @@ static const uint8_t SCL = GROVE_SCL;
 #define BTN_ACT   LOW
 
 // =========================
-// IR (user-configurable, default to I2C pins as placeholder)
+// IR
 // =========================
+#define TXLED   16   // IR transmit LED
+#define RXLED   18   // IR receiver
 #define LED_ON  HIGH
 #define LED_OFF LOW
 
