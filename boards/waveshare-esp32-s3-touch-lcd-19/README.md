@@ -215,4 +215,8 @@ The ST7789V2 on this board works correctly in **INVOFF** state
 (`TFT_INVERTION=0`). `colorInverted` is forced to `false` in
 `_post_setup_gpio()` to override any stored config value.
 
+
+https://github.com/user-attachments/assets/e4c3623c-ab0d-42d6-8355-7666d79de81d
+
+
 ### Simu
