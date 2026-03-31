@@ -36,7 +36,9 @@ void _setup_gpio() {
     // BOOT button as ESC / wake-up
     pinMode(BTN_PIN, INPUT_PULLUP);
 
-    bruceConfig.colorInverted = false;
+    // This panel requires color inversion ON for correct colors.
+    // Set default here (before fromFile). fromFile() will override if user changed it.
+    bruceConfig.colorInverted = true;
 
     // Default peripheral config (user can change via Bruce menu)
     bruceConfigPins.rfModule  = CC1101_SPI_MODULE;
@@ -52,10 +54,9 @@ void _setup_gpio() {
 ** Description:   Second-stage GPIO setup (runs after TFT and SD init)
 ***************************************************************************************/
 void _post_setup_gpio() {
-    // This ST7789V2 panel needs INVOFF for correct colors.
-    // Force it here (after begin_tft) to override whatever was stored in config.
-    bruceConfig.colorInverted = false;
-    tft.invertDisplay(false);
+    // Apply the inversion setting loaded from config (or the default set in _setup_gpio).
+    // Do NOT force a fixed value here — that would override the user's saved preference.
+    tft.invertDisplay(bruceConfig.colorInverted);
 
     // Backlight on this board is active-LOW: duty=0 (always LOW) = fully ON
     pinMode(TFT_BL, OUTPUT);
