@@ -118,8 +118,8 @@ CC1101 and NRF24 share the SPI bus (SCK/MOSI/MISO). Both can be connected simult
 | MOSI      | 2 (shared) |
 | MISO      | 3 (shared) |
 | CSN       | 7    |
-| CE        | 8    |
-| IRQ       | 15 (optional) |
+| CE        | 15   |
+| IRQ       | — (not connected) |
 
 > Assign pins in Bruce: **Settings → Config Pins → RF Module**
 
@@ -148,7 +148,7 @@ GPIO 38, 42, 43, 44, 45, 46
 ```
 Grove port     → PN532   (RFID/NFC — I2C, plug & play)
 GPIO 1,2,3,5,6 → CC1101  (SCK, MOSI, MISO, CSN, GDO0)
-GPIO 1,2,3,7,8 → NRF24   (SCK, MOSI, MISO, CSN, CE)
+GPIO 1,2,3,7,15 → NRF24  (SCK, MOSI, MISO, CSN, CE)
 GPIO 15        → NRF24   IRQ (optional)
 GPIO 16        → IR LED  (IR transmit)
 GPIO 18        → IR RX   (IR capture)
@@ -215,6 +215,34 @@ The ST7789V2 on this board works correctly in **INVOFF** state
 (`TFT_INVERTION=0`). `colorInverted` is forced to `false` in
 `_post_setup_gpio()` to override any stored config value.
 
+### Simultaneous RF modules
+CC1101 and NRF24L01 can both be physically connected at the same time
+sharing the SPI bus. Bruce switches between them via **Settings → Config Pins**.
+
+---
+
+## Precompiled binary
+
+Ready-to-flash `.bin` available in the
+[Releases](https://github.com/Tercyus/Bruce/releases) section.
+
+---
+
+## Credits
+
+| | |
+|---|---|
+| Original firmware | [BruceDevices/Bruce](https://github.com/BruceDevices/Bruce) |
+| Waveshare port | [@Tercyus](https://github.com/Tercyus) |
+| LovyanGFX | [lovyan03/LovyanGFX](https://github.com/lovyan03/LovyanGFX) |
+| TouchLib | [mmMicky/TouchLib](https://github.com/mmMicky/TouchLib) |
+
+---
+
+## License
+
+Inherits the license from the original Bruce firmware.
+See [LICENSE](../../LICENSE) in the root of the repository.
 
 https://github.com/user-attachments/assets/e4c3623c-ab0d-42d6-8355-7666d79de81d
 
