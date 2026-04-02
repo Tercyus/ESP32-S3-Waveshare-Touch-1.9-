@@ -49,7 +49,7 @@ static const uint8_t SCL = GROVE_SCL;
 // =========================
 // NRF24L01 RF module
 // =========================
-#define NRF24_CE_PIN    8
+#define NRF24_CE_PIN    15
 #define NRF24_SS_PIN    7
 #define NRF24_MOSI_PIN  SPI_MOSI_PIN
 #define NRF24_SCK_PIN   SPI_SCK_PIN
