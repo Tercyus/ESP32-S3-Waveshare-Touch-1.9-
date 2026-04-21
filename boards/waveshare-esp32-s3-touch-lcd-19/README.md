@@ -110,6 +110,7 @@ CC1101 and NRF24 share the SPI bus (SCK/MOSI/MISO). Both can be connected simult
 | GDO2       | — (not connected) |
 
 #### NRF24L01 — RF 2.4 GHz
+<img width="884" height="677" alt="Pinout-nrf24l01-modulo" src="https://github.com/user-attachments/assets/80579922-227b-4701-a60c-f7b17643d239" />
 
 | Pin NRF24 | GPIO |
 |-----------|------|
