@@ -40,6 +40,7 @@ Port of [Bruce Firmware](https://github.com/BruceDevices/Bruce) for the
 - [x] Bluetooth tools
 
 ---
+<img width="917" height="875" alt="image" src="https://github.com/user-attachments/assets/2f1e392e-d72d-46ae-9dec-e0d575b4bc58" />
 
 ## Pin map
 
