@@ -1,3 +1,4 @@
+<img width="815" height="405" alt="CC1101" src="https://github.com/user-attachments/assets/73b183ed-f1dd-45c7-afd0-daa8896b1294" />
 # Bruce Firmware — Waveshare ESP32-S3 Touch 1.9"
 
 Port of [Bruce Firmware](https://github.com/BruceDevices/Bruce) for the
@@ -97,6 +98,7 @@ Port of [Bruce Firmware](https://github.com/BruceDevices/Bruce) for the
 CC1101 and NRF24 share the SPI bus (SCK/MOSI/MISO). Both can be connected simultaneously — Bruce activates one at a time.
 
 #### CC1101 — RF 433/868/915 MHz
+![Uploading CC1101.png…]()
 
 | Pin CC1101 | GPIO |
 |------------|------|
