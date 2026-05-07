@@ -98,6 +98,7 @@ CC1101 and NRF24 share the SPI bus (SCK/MOSI/MISO). Both can be connected simult
 
 #### CC1101 — RF 433/868/915 MHz
 <img width="815" height="405" alt="CC1101" src="https://github.com/user-attachments/assets/73b183ed-f1dd-45c7-afd0-daa8896b1294" />
+
 | Pin CC1101 | GPIO |
 |------------|------|
 | VCC        | 3.3V |
